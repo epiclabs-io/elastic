@@ -1,4 +1,8 @@
 # elastic
+[![Build Status](https://travis-ci.org/epiclabs-io/elastic.svg?branch=master)](https://travis-ci.org/epiclabs-io/elastic)
+[![GoDoc](https://godoc.org/github.com/epiclabs-io/elastic?status.svg)](https://godoc.org/github.com/epiclabs-io/elastic)
+
+
 Converts go types no matter what
 
 `elastic` is a simple library that converts any type to another the best way possible. This is useful when the type is only known at run-time, which usually happens when serializing data. `elastic` allows your code to be flexible regarding type conversion if that is what you're looking for.
