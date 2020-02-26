@@ -9,6 +9,7 @@ import (
 	"github.com/epiclabs-io/elastic"
 )
 
+// Vector is a sample structure that represents a vector
 type Vector struct {
 	X float64
 	Y float64

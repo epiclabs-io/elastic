@@ -7,11 +7,15 @@ import (
 	"strconv"
 )
 
+// ConverterFunc is called to override default conversions
 type ConverterFunc func(source interface{}, targetType reflect.Type) (interface{}, error)
+
+// ConverterTo interface allows you to define how your type should convert to others
 type ConverterTo interface {
 	ConvertTo(targetType reflect.Type) (interface{}, error)
 }
 
+// ConverterEngine keeps conversion configurations
 type ConverterEngine struct {
 	sourceConverters    map[reflect.Type][]ConverterFunc
 	targetConverters    map[reflect.Type][]ConverterFunc
@@ -53,6 +57,7 @@ func (ce *ConverterEngine) AddTargetConverter(targetType reflect.Type, f Convert
 	ce.targetConverters[targetType] = cf
 }
 
+// AddInterfaceConverter adds a converion function for types that match the given interface (experimental)
 func (ce *ConverterEngine) AddInterfaceConverter(interfaceType reflect.Type, f ConverterFunc) {
 	if interfaceType.Kind() != reflect.Interface {
 		panic("type must be an interface")
