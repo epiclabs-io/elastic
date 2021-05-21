@@ -177,6 +177,9 @@ func (ce *ConverterEngine) Convert(source interface{}, targetType reflect.Type) 
 		if ok {
 			return kind2Exact(stringer.String(), targetType), nil
 		}
+		if sourceType == nil {
+			return kind2Exact("", targetType), nil
+		}
 		// Convert to string typical value types
 		switch sourceType.Kind() {
 		case reflect.Bool:
@@ -191,6 +194,20 @@ func (ce *ConverterEngine) Convert(source interface{}, targetType reflect.Type) 
 
 	}
 
+	if sourceType == nil {
+		switch targetType.Kind() {
+		case reflect.String:
+			return kind2Exact("", targetType), nil
+		case reflect.Bool:
+			return kind2Exact(false, targetType), nil
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			return kind2Exact(0, targetType), nil
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+			return kind2Exact(0, targetType), nil
+		case reflect.Float32, reflect.Float64:
+			return kind2Exact(0.0, targetType), nil
+		}
+	}
 	if sourceType.Kind() == reflect.String {
 		// Attempt to parse typical value types from the string
 		switch targetType.Kind() {
